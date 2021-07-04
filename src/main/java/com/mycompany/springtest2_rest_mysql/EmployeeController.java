@@ -45,6 +45,7 @@ public class EmployeeController {
     @GetMapping("employees/{id}")
     Employee one(@PathVariable Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        //TODO: Needs correction -> Find out how we handle situations like "Not Found" in controller
 //        if (employeeService.findEmployeeById(id) != null) {
 //            return ResponseEntity.ok(employeeService.findEmployeeById(id));
 //        }
