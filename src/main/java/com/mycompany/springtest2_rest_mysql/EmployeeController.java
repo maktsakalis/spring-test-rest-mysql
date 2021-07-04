@@ -6,6 +6,7 @@
 package com.mycompany.springtest2_rest_mysql;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,44 +23,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/employees")
-    List<Employee> all() {
-        return employeeRepository.findAll();
+    ResponseEntity<List<Employee>> all() {
+        return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 
     @PostMapping("/employees")
-    Employee newEmployee(@RequestBody Employee newEmployee) {
-        return employeeRepository.save(newEmployee);
+    ResponseEntity<Employee> newEmployee(@RequestBody Employee newEmployee) {
+        return ResponseEntity.ok(employeeService.createNewEmployee(newEmployee));
     }
 
     @GetMapping("employees/{id}")
-    Employee one(@RequestParam Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    ResponseEntity<Employee> one(@RequestParam Long id) {
+        return ResponseEntity.ok(employeeService.findEmployeeById(id));
     }
 
     @PutMapping("/employees/{id}")
-    Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
-        return employeeRepository.findById(id)
-                .map(employee -> {
-                    employee.setName(newEmployee.getName());
-                    employee.setRole(newEmployee.getRole());
-                    return employeeRepository.save(employee);
-                })
-                .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return employeeRepository.save(newEmployee);
-                });
+    ResponseEntity<Employee> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+        return ResponseEntity.ok(employeeService.updateEmployee(newEmployee, id));
     }
 
     @DeleteMapping("employees/{id}")
-    void DeleteEmployee(@PathVariable Long id) {
-        employeeRepository.deleteById(id);
+    ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return ResponseEntity.ok().build();
     }
 
 }
