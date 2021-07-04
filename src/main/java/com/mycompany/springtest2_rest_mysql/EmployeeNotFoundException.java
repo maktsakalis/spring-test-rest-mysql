@@ -12,6 +12,6 @@ package com.mycompany.springtest2_rest_mysql;
 public class EmployeeNotFoundException extends RuntimeException {
 
     public EmployeeNotFoundException(Long id) {
-        super("Could not find employee" + id);
+        super("Could not find employee: " + id + "\n");
     }
 }

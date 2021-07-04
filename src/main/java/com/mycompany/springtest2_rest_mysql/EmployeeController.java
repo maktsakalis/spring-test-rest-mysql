@@ -6,6 +6,7 @@
 package com.mycompany.springtest2_rest_mysql;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     private final EmployeeService employeeService;
 
@@ -40,8 +43,12 @@ public class EmployeeController {
     }
 
     @GetMapping("employees/{id}")
-    ResponseEntity<Employee> one(@RequestParam Long id) {
-        return ResponseEntity.ok(employeeService.findEmployeeById(id));
+    Employee one(@PathVariable Long id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+//        if (employeeService.findEmployeeById(id) != null) {
+//            return ResponseEntity.ok(employeeService.findEmployeeById(id));
+//        }
+//        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/employees/{id}")
@@ -52,7 +59,8 @@ public class EmployeeController {
     @DeleteMapping("employees/{id}")
     ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
-        return ResponseEntity.ok().build();
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
 }
