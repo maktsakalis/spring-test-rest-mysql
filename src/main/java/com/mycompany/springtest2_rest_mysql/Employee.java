@@ -18,77 +18,91 @@ import javax.persistence.Id;
 @Entity
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String name;
-    private String role;
+	private String name;
+	private String role;
+	private String status;
 
-    public Employee() {
-    }
+	public Employee() {
+	}
 
-    public Employee(String name, String role) {
-        this.name = name;
-        this.role = role;
-    }
+	public Employee(String name, String role, String status) {
+		super();
+		this.name = name;
+		this.role = role;
+		this.status = status;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.name, this.role);
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof Employee)) {
-            return false;
-        }
-        final Employee other = (Employee) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.role, other.role)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    @Override
-    public String toString() {
-        return "Employee{" + "id=" + id + ", name=" + name + ", role=" + role + '}';
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.id, this.name, this.role, this.status);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Employee)) {
+			return false;
+		}
+		final Employee other = (Employee) obj;
+		if (!Objects.equals(this.name, other.name)) {
+			return false;
+		}
+		if (!Objects.equals(this.role, other.role)) {
+			return false;
+		}
+		if (!Objects.equals(this.id, other.id)) {
+			return false;
+		}
+		if (!Objects.equals(this.status, other.status)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", role=" + role + ", status=" + status + "]";
+	}
 
 }

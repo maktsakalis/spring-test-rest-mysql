@@ -23,7 +23,7 @@ class EmployeeRepositoryTests {
 
 	@Test
 	void testSaveEmployee() {
-		Employee employee = new Employee("Lokesh", "Engineer");
+		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
 		Employee employee2 = employeeRepository.findByName("Lokesh").get();
 		assertNotNull(employee);
@@ -32,7 +32,7 @@ class EmployeeRepositoryTests {
 
 	@Test
 	void testFindEmployeeById() {
-		Employee employee = new Employee("Lokesh", "Engineer");
+		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
 		Employee employeeFromDB = employeeRepository.findById(employee.getId()).get();
 		assertEquals(employeeFromDB.getId(), employee.getId());
@@ -40,7 +40,7 @@ class EmployeeRepositoryTests {
 
 	@Test
 	void testFindAllEmployees() {
-		Employee employee = new Employee("Lokesh", "Engineer");
+		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
 		Iterable<Employee> employees = employeeRepository.findAll();
 		Assertions.assertThat(employees).extracting(Employee::getName).contains("Lokesh");
@@ -48,7 +48,7 @@ class EmployeeRepositoryTests {
 
 	@Test
 	void testDeleteEmployeeById() {
-		Employee employee = new Employee("Lokesh", "Engineer");
+		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
 		java.util.List<Employee> employees = employeeRepository.findAll();
 		assertEquals(employees.size(), 1);
