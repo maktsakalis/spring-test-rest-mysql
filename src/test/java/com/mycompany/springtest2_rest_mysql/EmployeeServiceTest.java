@@ -34,7 +34,7 @@ class EmployeeServiceTest {
 
 		Mockito.when(repository.findAll()).thenReturn(list);
 
-		// test
+		// test service method findAllEmployees()
 		List<Employee> empList = service.findAllEmployees();
 
 		assertEquals(3, empList.size());
@@ -50,15 +50,14 @@ class EmployeeServiceTest {
 
 		list.add(empOne);
 		list.add(empTwo);
-		list.add(empThree);
 
 		Mockito.when(repository.findAllActiveEmployees()).thenReturn(list);
 
-		// test
+		// test service method findAllActiveEmployees
 		List<Employee> empList = service.findAllActiveEmployees();
 
 		assertEquals(2, empList.size());
-		Mockito.verify(repository, Mockito.times(1)).findAll();
+		Mockito.verify(repository, Mockito.times(1)).findAllActiveEmployees();
 	}
 
 }
