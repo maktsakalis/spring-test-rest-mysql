@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.el.stream.Optional;
+
 /**
  *
  * @author makis
@@ -23,55 +25,63 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
-    private final EmployeeService employeeService;
+	private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+	public EmployeeController(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
 
-    @GetMapping("/employees")
-    ResponseEntity<List<Employee>> all() {
-        return ResponseEntity.ok(employeeService.getAllEmployees());
-    }
+	@GetMapping("/employees")
+	ResponseEntity<List<Employee>> all() {
+		return ResponseEntity.ok(employeeService.getAllEmployees());
+	}
 
-    @PostMapping("/employees")
-    ResponseEntity<Employee> newEmployee(@RequestBody Employee newEmployee) {
-        return ResponseEntity.ok(employeeService.createNewEmployee(newEmployee));
-    }
+	@PostMapping("/employees")
+	ResponseEntity<Employee> newEmployee(@RequestBody Employee newEmployee) {
+		return ResponseEntity.ok(employeeService.createNewEmployee(newEmployee));
+	}
 
-    @GetMapping("employees/{id}")
-    Employee findEmployeeById(@PathVariable Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        //TODO: Needs correction -> Find out how we handle situations like "Not Found" in controller
-//        if (employeeService.findEmployeeById(id) != null) {
-//            return ResponseEntity.ok(employeeService.findEmployeeById(id));
-//        }
-//        return ResponseEntity.notFound().build();
-    }
-    
-    @GetMapping("employees/{name}")
-    Employee findEmployeeByName(@PathVariable String name) {
-        return employeeRepository.findByName(name).orElseThrow(() -> new EmployeeNotFoundException(name));
-        //TODO: Needs correction -> Find out how we handle situations like "Not Found" in controller
-//        if (employeeService.findEmployeeById(id) != null) {
-//            return ResponseEntity.ok(employeeService.findEmployeeById(id));
-//        }
-//        return ResponseEntity.notFound().build();
-    }
+	@GetMapping("employees/{id}")
+	ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
+		Employee empl = employeeService.findEmployeeById(id);
 
-    @PutMapping("/employees/{id}")
-    ResponseEntity<Employee> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
-        return ResponseEntity.ok(employeeService.updateEmployee(newEmployee, id));
-    }
+		if (empl != null) {
+			return ResponseEntity.ok(empl);
+		}
+		return ResponseEntity.notFound().build();
+	}
 
-    @DeleteMapping("employees/{id}")
-    ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
-        employeeService.deleteEmployeeById(id);
+	@GetMapping("employees/active")
+	ResponseEntity<List<Employee>> findAllActiveEmployees() {
+		List<Employee> employees = employeeService.findAllActiveEmployees();
+		if (employees != null) {
+			return ResponseEntity.ok(employees);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("employees/{name}")
+	ResponseEntity<Employee> findEmployeeByName(@PathVariable String name) {
+		Employee employeeInDb = employeeService.findEmployeeByName(name);
+		if (employeeInDb != null) {
+			return ResponseEntity.ok(employeeInDb);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/employees/{id}")
+	ResponseEntity<Employee> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+		return ResponseEntity.ok(employeeService.updateEmployee(newEmployee, id));
+	}
+
+	@DeleteMapping("employees/{id}")
+	ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
+		employeeService.deleteEmployeeById(id);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        return ResponseEntity.noContent().build();
-    }
+		return ResponseEntity.noContent().build();
+	}
 
 }

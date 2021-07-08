@@ -25,7 +25,7 @@ class EmployeeRepositoryTests {
 	void testSaveEmployee() {
 		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
-		Employee employee2 = employeeRepository.findByName("Lokesh").get();
+		Employee employee2 = employeeRepository.findByName("Lokesh");
 		assertNotNull(employee);
 		assertEquals(employee2.getName(), employee.getName());
 	}
@@ -45,13 +45,22 @@ class EmployeeRepositoryTests {
 		Iterable<Employee> employees = employeeRepository.findAll();
 		Assertions.assertThat(employees).extracting(Employee::getName).contains("Lokesh");
 	}
+	
+	@Test
+	void testActiveEmployees() {
+		Employee employee1 = new Employee("Lokesh", "Engineer", "employed");
+		employeeRepository.save(employee1);
+		Employee employee2 = new Employee("Gupta", "Engineer", "unemployed");		
+		employeeRepository.save(employee2);
+		Iterable<Employee> employees = employeeRepository.findAllActiveEmployees();
+		Assertions.assertThat(employees).extracting(Employee::getName).contains("Lokesh");
+	}
 
 	@Test
 	void testDeleteEmployeeById() {
 		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
-		java.util.List<Employee> employees = employeeRepository.findAll();
-		assertEquals(employees.size(), 1);
+		assertEquals(employeeRepository.findById(employee.getId()).isPresent(), true);
 		employeeRepository.deleteById(employee.getId());
 		assertEquals(employeeRepository.findAll().size(), 0);
 	}
