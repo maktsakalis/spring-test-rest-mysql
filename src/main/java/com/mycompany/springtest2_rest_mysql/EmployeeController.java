@@ -43,8 +43,18 @@ public class EmployeeController {
     }
 
     @GetMapping("employees/{id}")
-    Employee one(@PathVariable Long id) {
+    Employee findEmployeeById(@PathVariable Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        //TODO: Needs correction -> Find out how we handle situations like "Not Found" in controller
+//        if (employeeService.findEmployeeById(id) != null) {
+//            return ResponseEntity.ok(employeeService.findEmployeeById(id));
+//        }
+//        return ResponseEntity.notFound().build();
+    }
+    
+    @GetMapping("employees/{name}")
+    Employee findEmployeeByName(@PathVariable String name) {
+        return employeeRepository.findByName(name).orElseThrow(() -> new EmployeeNotFoundException(name));
         //TODO: Needs correction -> Find out how we handle situations like "Not Found" in controller
 //        if (employeeService.findEmployeeById(id) != null) {
 //            return ResponseEntity.ok(employeeService.findEmployeeById(id));

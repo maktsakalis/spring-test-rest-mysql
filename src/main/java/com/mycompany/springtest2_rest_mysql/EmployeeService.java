@@ -32,7 +32,7 @@ public class EmployeeService {
     Employee findEmployeeById(Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
-
+    
     Employee updateEmployee(Employee newEmployee, Long id) {
         return employeeRepository.findById(id)
                 .map(employee -> {
@@ -48,6 +48,5 @@ public class EmployeeService {
 
     void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
-    }
-
+    }   
 }
