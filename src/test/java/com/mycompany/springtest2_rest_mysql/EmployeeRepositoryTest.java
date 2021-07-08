@@ -16,7 +16,7 @@ import antlr.collections.List;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class EmployeeRepositoryTests {
+class EmployeeRepositoryTest {
 
 	@Autowired
 	EmployeeRepository employeeRepository;

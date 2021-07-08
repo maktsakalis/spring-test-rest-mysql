@@ -25,9 +25,6 @@ import com.sun.el.stream.Optional;
 @RestController
 public class EmployeeController {
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
-
 	private final EmployeeService employeeService;
 
 	public EmployeeController(EmployeeService employeeService) {
@@ -35,8 +32,8 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/employees")
-	ResponseEntity<List<Employee>> all() {
-		return ResponseEntity.ok(employeeService.getAllEmployees());
+	ResponseEntity<List<Employee>> findAll() {
+		return ResponseEntity.ok(employeeService.findAllEmployees());
 	}
 
 	@PostMapping("/employees")
