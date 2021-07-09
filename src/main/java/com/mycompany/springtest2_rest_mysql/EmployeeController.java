@@ -46,12 +46,7 @@ public class EmployeeController {
 
 	@GetMapping("/{id}")
 	ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
-		Employee empl = employeeService.findEmployeeById(id);
-
-		if (empl != null) {
-			return ResponseEntity.ok(empl);
-		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(employeeService.findEmployeeById(id));
 	}
 
 	@GetMapping("/active")
