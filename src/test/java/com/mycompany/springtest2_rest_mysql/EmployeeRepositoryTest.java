@@ -25,9 +25,9 @@ class EmployeeRepositoryTest {
 	void testSaveEmployee() {
 		Employee employee = new Employee("Lokesh", "Engineer", "employed");
 		employeeRepository.save(employee);
-		Employee employee2 = employeeRepository.findByName("Lokesh");
+		java.util.List<Employee> employees = employeeRepository.findByName("Lokesh");
 		assertNotNull(employee);
-		assertEquals(employee2.getName(), employee.getName());
+		assertEquals(employees.get(0).getName(), employee.getName());
 	}
 
 	@Test

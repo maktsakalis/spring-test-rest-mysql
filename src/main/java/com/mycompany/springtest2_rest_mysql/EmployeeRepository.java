@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
-	Employee findByName(String name);
+	List<Employee> findByName(String name);
 	
 	@Query("SELECT e FROM Employee e WHERE e.status = 'employed'")
 	List<Employee> findAllActiveEmployees();

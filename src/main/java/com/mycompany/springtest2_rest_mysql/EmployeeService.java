@@ -33,7 +33,7 @@ public class EmployeeService {
         return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
     
-    Employee findEmployeeByName(String name) {
+    List<Employee> findEmployeeByName(String name) {
         return employeeRepository.findByName(name);
     }
     

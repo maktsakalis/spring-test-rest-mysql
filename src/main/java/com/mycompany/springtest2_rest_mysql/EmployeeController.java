@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.el.stream.Optional;
@@ -22,6 +24,7 @@ import com.sun.el.stream.Optional;
  *
  * @author makis
  */
+@RequestMapping("/employees")
 @RestController
 public class EmployeeController {
 
@@ -31,17 +34,17 @@ public class EmployeeController {
 		this.employeeService = employeeService;
 	}
 
-	@GetMapping("/employees")
+	@GetMapping
 	ResponseEntity<List<Employee>> findAll() {
 		return ResponseEntity.ok(employeeService.findAllEmployees());
 	}
 
-	@PostMapping("/employees")
+	@PostMapping
 	ResponseEntity<Employee> newEmployee(@RequestBody Employee newEmployee) {
 		return ResponseEntity.ok(employeeService.createNewEmployee(newEmployee));
 	}
 
-	@GetMapping("employees/{id}")
+	@GetMapping("/{id}")
 	ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
 		Employee empl = employeeService.findEmployeeById(id);
 
@@ -51,7 +54,7 @@ public class EmployeeController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("employees/active")
+	@GetMapping("/active")
 	ResponseEntity<List<Employee>> findAllActiveEmployees() {
 		List<Employee> employees = employeeService.findAllActiveEmployees();
 		if (employees != null) {
@@ -60,21 +63,21 @@ public class EmployeeController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("employees/{name}")
-	ResponseEntity<Employee> findEmployeeByName(@PathVariable String name) {
-		Employee employeeInDb = employeeService.findEmployeeByName(name);
+	@GetMapping("/by")
+	ResponseEntity<List<Employee>> findEmployeeByName(@RequestParam String name) {
+		List<Employee> employeeInDb = employeeService.findEmployeeByName(name);
 		if (employeeInDb != null) {
 			return ResponseEntity.ok(employeeInDb);
 		}
 		return ResponseEntity.notFound().build();
 	}
 
-	@PutMapping("/employees/{id}")
+	@PutMapping("/{id}")
 	ResponseEntity<Employee> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 		return ResponseEntity.ok(employeeService.updateEmployee(newEmployee, id));
 	}
 
-	@DeleteMapping("employees/{id}")
+	@DeleteMapping("/{id}")
 	ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
 		employeeService.deleteEmployeeById(id);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);

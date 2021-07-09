@@ -6,6 +6,8 @@
 package com.mycompany.springtest2_rest_mysql;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  *
  * @author makis
  */
+@Disabled
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ApplicationTest {
