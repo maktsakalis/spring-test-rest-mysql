@@ -6,7 +6,7 @@
 package com.mycompany.springtest2_rest_mysql;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sun.el.stream.Optional;
 
 /**
  *
@@ -75,7 +73,6 @@ public class EmployeeController {
 	@DeleteMapping("/{id}")
 	ResponseEntity<Void> DeleteEmployee(@PathVariable Long id) {
 		employeeService.deleteEmployeeById(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		return ResponseEntity.noContent().build();
 	}
 

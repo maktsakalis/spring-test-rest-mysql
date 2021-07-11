@@ -25,8 +25,9 @@ public class LoadDatabase {
 
 		return args -> {
 			log.info("Preloading " + employeeRepository.save(new Employee("John", "developer", "employed")));
-			log.info("Preloading " + employeeRepository.save(new Employee("John", "tester", "employed")));
+			log.info("Preloading " + employeeRepository.save(new Employee("Peter", "tester", "employed")));
 			log.info("Preloading " + employeeRepository.save(new Employee("George", "developer", "unemployed")));
+			log.info("Preloading " + employeeRepository.save(new Employee("Michael", "tester", "unemployed")));
 		};
 	}
 
