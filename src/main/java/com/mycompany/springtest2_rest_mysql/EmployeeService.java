@@ -15,47 +15,46 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
+	private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+	public EmployeeService(EmployeeRepository employeeRepository) {
+		this.employeeRepository = employeeRepository;
+	}
 
-    List<Employee> findAllEmployees() {
-        return employeeRepository.findAll();
-    }
+	List<Employee> findAllEmployees() {
+		return employeeRepository.findAll();
+	}
 
-    Employee createNewEmployee(Employee newEmployee) {
-        return employeeRepository.save(newEmployee);
-    }
+	Employee createNewEmployee(Employee newEmployee) {
+		return employeeRepository.save(newEmployee);
+	}
 
-    Employee findEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-    }
-    
-    List<Employee> findEmployeeByName(String name) {
-        return employeeRepository.findByName(name);
-    }
-    
-    List<Employee> findAllActiveEmployees(){
-    	return employeeRepository.findAllActiveEmployees();
-    }
-    
-    
-    Employee updateEmployee(Employee newEmployee, Long id) {
-        return employeeRepository.findById(id)
-                .map(employee -> {
-                    employee.setName(newEmployee.getName());
-                    employee.setRole(newEmployee.getRole());
-                    return employeeRepository.save(employee);
-                })
-                .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return employeeRepository.save(newEmployee);
-                });
-    }
+	Employee findEmployeeById(Long id) {
+		return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+	}
 
-    void deleteEmployeeById(Long id) {
-        employeeRepository.deleteById(id);
-    }   
+	List<Employee> findEmployeeByName(String name) {
+		return employeeRepository.findByName(name);
+	}
+
+	List<Employee> findAllActiveEmployees() {
+		return employeeRepository.findAllActiveEmployees();
+	}
+
+	Employee updateEmployee(Employee newEmployee, Long id) {
+
+		return employeeRepository.findById(id).map(employee -> {
+			employee.setName(newEmployee.getName());
+			employee.setRole(newEmployee.getRole());
+			employee.setStatus(newEmployee.getStatus());
+			return employeeRepository.save(employee);
+		}).orElseGet(() -> {
+//                    newEmployee.setId(id);
+			return employeeRepository.save(newEmployee);
+		});
+	}
+
+	void deleteEmployeeById(Long id) {
+		employeeRepository.deleteById(id);
+	}
 }
