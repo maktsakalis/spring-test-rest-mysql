@@ -18,11 +18,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
 
-	@InjectMocks
-	EmployeeService service;
-
 	@Mock
 	EmployeeRepository repository;
+
+	@InjectMocks
+	EmployeeService service;
 
 	@Test
 	void testFindAllEmployees() {
@@ -63,6 +63,7 @@ class EmployeeServiceTest {
 		String actualMessage = exception.getMessage();
 
 		assertTrue(actualMessage.contains(expectedMessage));
+		Mockito.verify(repository, Mockito.times(1)).findById(200L);
 	}
 
 	@Test
@@ -124,45 +125,39 @@ class EmployeeServiceTest {
 		assertEquals(updatedEmployee.getName(), newEmployee.getName());
 		assertEquals(updatedEmployee.getRole(), newEmployee.getRole());
 		assertEquals(updatedEmployee.getStatus(), newEmployee.getStatus());
+		Mockito.verify(repository, Mockito.times(2)).findById(1L);
 	}
-	
+
 	@Test
 	void testCreateNewEmployee() {
 		Employee employee = new Employee("Jerry", "developer", "unemployed");
 		employee.setId(2L);
-		
+
 		Mockito.when(repository.save(employee)).thenReturn(employee);
-		
+
 		Employee savedEmployee = service.createNewEmployee(employee);
 
 		assertEquals(savedEmployee.getId(), employee.getId());
 		assertEquals(savedEmployee.getName(), employee.getName());
 		assertEquals(savedEmployee.getRole(), employee.getRole());
 		assertEquals(savedEmployee.getStatus(), employee.getStatus());
+		Mockito.verify(repository, Mockito.times(1)).save(employee);
 	}
-	
-	
+
 	@Test
 	void testDeleteEmployee() {
 
 		Employee employee = new Employee("Jerry", "developer", "unemployed");
 		employee.setId(1L);
-		
+
 		repository.save(employee);
 		service.deleteEmployeeById(1L);
-		
-		Assertions.assertThat(repository.findById(1L)).isEmpty();
-		
-//		
-//		Exception exception = assertThrows(EmployeeNotFoundException.class, () -> repository.findById(1L));
-//
-//		String expectedMessage = "Could not find employee: 200";
-//		String actualMessage = exception.getMessage();
-//
-//		assertTrue(actualMessage.contains(expectedMessage));
 
+		Assertions.assertThat(repository.findById(1L)).isEmpty();
+		Mockito.verify(repository, Mockito.times(1)).save(employee);
+		Mockito.verify(repository, Mockito.times(1)).deleteById(1L);
+		Mockito.verify(repository, Mockito.times(1)).findById(1L);
+	
 	}
-	
-	
 
 }
