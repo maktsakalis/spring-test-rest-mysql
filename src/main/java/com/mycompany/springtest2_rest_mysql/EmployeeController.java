@@ -5,8 +5,11 @@
  */
 package com.mycompany.springtest2_rest_mysql;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +62,38 @@ public class EmployeeController {
 	@GetMapping("/by")
 	ResponseEntity<List<Employee>> findEmployeeByName(@RequestParam String name) {
 		List<Employee> employeeInDb = employeeService.findEmployeeByName(name);
+		if (employeeInDb != null) {
+			return ResponseEntity.ok(employeeInDb);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/bytime")
+	ResponseEntity<Employee> findRecruitmentByRecruitmentTime(
+			@RequestParam("time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime recruitmentTime) {
+
+		Employee employeeInDb = employeeService.findRecruitmentByRecruitmentTime(recruitmentTime);
+		if (employeeInDb != null) {
+			return ResponseEntity.ok(employeeInDb);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/bydate")
+	ResponseEntity<List<Employee>> findEmployeeByRecruitmentDate(
+			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate recruitmentDate) {
+
+		List<Employee> employeeInDb = employeeService.findEmployeeByRecruitmentDate(recruitmentDate);
+		if (employeeInDb != null) {
+			return ResponseEntity.ok(employeeInDb);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/lastpayment")
+	ResponseEntity<Employee> findLastPaidEmployee() {
+
+		Employee employeeInDb = employeeService.findLastPaidEmployee();
 		if (employeeInDb != null) {
 			return ResponseEntity.ok(employeeInDb);
 		}

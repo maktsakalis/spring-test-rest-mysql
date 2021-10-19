@@ -5,6 +5,9 @@
  */
 package com.mycompany.springtest2_rest_mysql;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -26,15 +29,22 @@ public class Employee {
 	private String name;
 	private String role;
 	private String status;
+	private LocalDateTime lastPayment;
+	private LocalDate recruitmentDate;
+	private LocalTime recruitmentTime;
 
 	public Employee() {
 	}
 
-	public Employee(String name, String role, String status) {
+	public Employee(String name, String role, String status, LocalDateTime lastPayment, LocalDate recruitmentDate,
+			LocalTime recruitmentTime) {
 		super();
 		this.name = name;
 		this.role = role;
 		this.status = status;
+		this.lastPayment = lastPayment;
+		this.recruitmentDate = recruitmentDate;
+		this.recruitmentTime = recruitmentTime;
 	}
 
 	public Long getId() {
@@ -69,9 +79,34 @@ public class Employee {
 		this.status = status;
 	}
 
+	public LocalDateTime getLastPayment() {
+		return lastPayment;
+	}
+
+	public void setLastPayment(LocalDateTime lastPayment) {
+		this.lastPayment = lastPayment;
+	}
+
+	public LocalDate getRecruitmentDate() {
+		return recruitmentDate;
+	}
+
+	public void setRecruitmentDate(LocalDate recruitmentDate) {
+		this.recruitmentDate = recruitmentDate;
+	}
+
+	public LocalTime getRecruitmentTime() {
+		return recruitmentTime;
+	}
+
+	public void setRecruitmentTime(LocalTime recruitmentTime) {
+		this.recruitmentTime = recruitmentTime;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id, this.name, this.role, this.status);
+		return Objects.hash(this.id, this.name, this.role, this.status, this.lastPayment, this.recruitmentDate,
+				this.recruitmentTime);
 	}
 
 	@Override
@@ -98,12 +133,22 @@ public class Employee {
 		if (!Objects.equals(this.status, other.status)) {
 			return false;
 		}
+		if (!Objects.equals(this.lastPayment, other.lastPayment)) {
+			return false;
+		}
+		if (!Objects.equals(this.recruitmentDate, other.recruitmentDate)) {
+			return false;
+		}
+		if (!Objects.equals(this.recruitmentTime, other.recruitmentTime)) {
+			return false;
+		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", role=" + role + ", status=" + status + "]";
+		return "Employee [id=" + id + ", name=" + name + ", role=" + role + ", status=" + status + ", lastPayment="
+				+ lastPayment + ", recruitmentDate=" + recruitmentDate + ", recruitmentTime=" + recruitmentTime + "]";
 	}
 
 }

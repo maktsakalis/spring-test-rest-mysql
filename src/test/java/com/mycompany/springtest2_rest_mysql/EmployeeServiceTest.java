@@ -2,6 +2,9 @@ package com.mycompany.springtest2_rest_mysql;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +30,15 @@ class EmployeeServiceTest {
 	@Test
 	void testFindAllEmployees() {
 		List<Employee> list = new ArrayList<Employee>();
-		Employee empOne = new Employee("Jerry", "developer", "employed");
-		Employee empTwo = new Employee("Alex", "tester", "employed");
-		Employee empThree = new Employee("Steve", "developer", "unemployed");
+		Employee empOne = new Employee("Jerry", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empTwo = new Employee("Alex", "tester", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empThree = new Employee("Steve", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		list.add(empOne);
 		list.add(empTwo);
@@ -46,7 +55,9 @@ class EmployeeServiceTest {
 	@Test
 	void testFindEmployeeById() {
 
-		Employee employee = new Employee("Jerry", "developer", "unemployed");
+		Employee employee = new Employee("Jerry", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		employee.setId(1L);
 
 		Mockito.when(repository.findById(1L)).thenReturn(Optional.of(employee));
@@ -69,8 +80,12 @@ class EmployeeServiceTest {
 	@Test
 	void testFindEmployeeByName() {
 		List<Employee> list = new ArrayList<Employee>();
-		Employee empOne = new Employee("Jerry", "developer", "employed");
-		Employee empTwo = new Employee("Alex", "tester", "employed");
+		Employee empOne = new Employee("Jerry", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empTwo = new Employee("Alex", "tester", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		list.add(empOne);
 		list.add(empTwo);
@@ -90,9 +105,15 @@ class EmployeeServiceTest {
 	@Test
 	void testFindAllActiveEmployees() {
 		List<Employee> list = new ArrayList<Employee>();
-		Employee empOne = new Employee("Jerry", "developer", "employed");
-		Employee empTwo = new Employee("Alex", "tester", "employed");
-		Employee empThree = new Employee("Steve", "developer", "unemployed");
+		Employee empOne = new Employee("Jerry", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empTwo = new Employee("Alex", "tester", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empThree = new Employee("Steve", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		list.add(empOne);
 		list.add(empTwo);
@@ -112,9 +133,13 @@ class EmployeeServiceTest {
 	@Test
 	void testUpdateEmployee() {
 
-		Employee employee = new Employee("Jerry", "developer", "unemployed");
+		Employee employee = new Employee("Jerry", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		employee.setId(1L);
-		Employee newEmployee = new Employee("Makis", "tester", "employed");
+		Employee newEmployee = new Employee("Makis", "tester", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		newEmployee.setId(1L);
 
 		Mockito.when(repository.findById(1L)).thenReturn(Optional.of(employee));
@@ -130,7 +155,9 @@ class EmployeeServiceTest {
 
 	@Test
 	void testCreateNewEmployee() {
-		Employee employee = new Employee("Jerry", "developer", "unemployed");
+		Employee employee = new Employee("Jerry", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		employee.setId(2L);
 
 		Mockito.when(repository.save(employee)).thenReturn(employee);
@@ -147,7 +174,9 @@ class EmployeeServiceTest {
 	@Test
 	void testDeleteEmployee() {
 
-		Employee employee = new Employee("Jerry", "developer", "unemployed");
+		Employee employee = new Employee("Jerry", "developer", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		employee.setId(1L);
 
 		repository.save(employee);
@@ -157,7 +186,7 @@ class EmployeeServiceTest {
 		Mockito.verify(repository, Mockito.times(1)).save(employee);
 		Mockito.verify(repository, Mockito.times(1)).deleteById(1L);
 		Mockito.verify(repository, Mockito.times(1)).findById(1L);
-	
+
 	}
 
 }

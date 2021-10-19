@@ -5,6 +5,8 @@
  */
 package com.mycompany.springtest2_rest_mysql;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,19 @@ public class EmployeeService {
 	List<Employee> findEmployeeByName(String name) {
 		return employeeRepository.findByName(name);
 	}
-
+	
+	Employee findRecruitmentByRecruitmentTime(LocalTime recruitmentTime) {
+		return employeeRepository.findRecruitmentByRecruitmentTime(recruitmentTime);
+	}
+	
+	List<Employee> findEmployeeByRecruitmentDate(LocalDate recruitmentDate) {
+		return employeeRepository.findEmployeeByRecruitmentDate(recruitmentDate);
+	}
+	
+	Employee findLastPaidEmployee() {
+		return employeeRepository.findLastPaidEmployee();
+	}
+	
 	List<Employee> findAllActiveEmployees() {
 		return employeeRepository.findAllActiveEmployees();
 	}

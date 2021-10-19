@@ -1,5 +1,8 @@
 package com.mycompany.springtest2_rest_mysql;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +33,12 @@ class EmployeeControllerTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		Employee employee = new Employee("Makis", "developer", "employed");
-		Employee employeeTwo = new Employee("Alex", "tester", "unemployed");
+		Employee employee = new Employee("Makis", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee employeeTwo = new Employee("Alex", "tester", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		List<Employee> employees = new ArrayList<Employee>();
 		employees.add(employee);
 		employees.add(employeeTwo);
@@ -47,9 +54,15 @@ class EmployeeControllerTest {
 	@Test
 	public void testFindAllActiveEmployees() throws Exception {
 		List<Employee> employees = new ArrayList<Employee>();
-		Employee empOne = new Employee("Jerry", "developer", "employed");
-		Employee empTwo = new Employee("Alex", "tester", "unemployed");
-		Employee empThree = new Employee("Steve", "developer", "employed");
+		Employee empOne = new Employee("Jerry", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empTwo = new Employee("Alex", "tester", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee empThree = new Employee("Steve", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		employees.add(empOne);
 		employees.add(empTwo);
 		employees.add(empThree);
@@ -73,7 +86,9 @@ class EmployeeControllerTest {
 
 	@Test
 	public void testNewEmployee() throws Exception {
-		Employee employee = new Employee("Chris", "tester", "unemployed");
+		Employee employee = new Employee("Chris", "tester", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		Mockito.when(employeeService.createNewEmployee(employee)).thenReturn(employee);
 
@@ -87,7 +102,9 @@ class EmployeeControllerTest {
 
 	@Test
 	public void testFindEmployeeById() throws Exception {
-		Employee employee = new Employee("Chris", "testet", "unemployed");
+		Employee employee = new Employee("Chris", "testet", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		Mockito.when(employeeService.findEmployeeById(1L)).thenReturn(employee);
 
@@ -101,9 +118,15 @@ class EmployeeControllerTest {
 
 	@Test
 	public void testFindEmployeeByName() throws Exception {
-		Employee employee = new Employee("Chris", "testet", "unemployed");
-		Employee employeeTwo = new Employee("Makis", "developer", "employed");
-		Employee employeeThree = new Employee("Chris", "developer", "employed");
+		Employee employee = new Employee("Chris", "testet", "unemployed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee employeeTwo = new Employee("Makis", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
+		Employee employeeThree = new Employee("Chris", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 		List<Employee> employees = new ArrayList<Employee>();
 		employees.add(employee);
 		employees.add(employeeTwo);
@@ -128,7 +151,9 @@ class EmployeeControllerTest {
 
 	@Test
 	public void testReplaceEmployee() throws Exception {
-		Employee empOne = new Employee("Jerry", "developer", "employed");
+		Employee empOne = new Employee("Jerry", "developer", "employed",
+				LocalDateTime.of(LocalDate.of(2021, 3, 31), LocalTime.now()), LocalDate.of(2021, 3, 31),
+				LocalTime.now());
 
 		Mockito.when(employeeService.updateEmployee(empOne, 1L)).thenReturn(empOne);
 
