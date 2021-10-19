@@ -30,7 +30,7 @@ public class LoadDatabase {
 		System.out.println();
 
 		return args -> {
-			log.info("Preloading " + employeeRepository.save(new Employee("John", "developer", "employed",
+			log.info("Preloading " + employeeRepository.save(new Employee("Gerasimos", "developer", "employed",
 					LocalDateTime.of(LocalDate.of(2021, 9, 25), LocalTime.of(13, 15, 48)), LocalDate.of(2021, 3, 27),
 					LocalTime.of(10, 43, 12))));
 			log.info("Preloading " + employeeRepository.save(new Employee("Peter", "tester", "employed",
